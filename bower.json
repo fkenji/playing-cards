@@ -1,0 +1,21 @@
+{
+  "name": "cards",
+  "version": "0.0.0",
+  "authors": [
+    "Fabio Kenji <seibzhen@gmail.com>"
+  ],
+  "description": "Web component to display playing cards",
+  "main": "index.html",
+  "moduleType": [
+    "globals"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

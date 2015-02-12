@@ -1,0 +1,110 @@
+<template id="cardTemplate">
+<style>
+  .card {
+    width: 7em;
+    height: 10em;
+    background: #fff;
+    border: 1px solid black;
+    border-radius: 5px;
+    position: relative;
+    
+    margin: 0.2em;
+    display: inline-block;
+
+    -webkit-box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75);
+    box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75); 
+    font-size: 16px;   
+    box-sizing: border-box;
+  }
+
+  .card-head {
+    position: absolute;
+    left: 0.5em;
+    top: 0.5em;
+  }
+
+  .card-bottom {
+    position: absolute;
+    transform: rotate(180deg);
+    bottom: 0.5em;
+    right: 0.5em;
+  }
+
+  .card-spades, .card-clubs {
+    color: #000; 
+  }
+
+  .card-hearts, .card-diamonds {
+    color: #D40000; 
+  }
+
+  .card-hearts .card-suit:after {
+    content: "\2665"
+  }  
+
+  .card-spades .card-suit:after {
+    content: "\2660"
+  }  
+
+  .card-diamonds .card-suit:after {
+    content: "\2666"
+  }  
+
+  .card-clubs .card-suit:after {
+    content: "\2663"
+  }        
+</style>
+<div class="card">
+  <div class="card-head">
+    <div class="card-value">{{ value }}</div>
+    <div class="card-suit"></div>
+  </div>
+  <div class="card-bottom">
+    <div class="card-value">2</div>
+    <div class="card-suit"></div>
+  </div>      
+</div>
+</template>
+<script type="text/javascript">
+(function() {
+
+  var template = document.currentScript.ownerDocument.getElementById('cardTemplate').content;
+
+  var blackjackCard = Object.create(HTMLElement.prototype);
+
+  blackjackCard.attachedCallback = function() {
+    this.el = this.createShadowRoot();
+
+    this.template = template;
+    this.face = this.attributes.face.value;
+    this.suit = this.attributes.suit.value;
+
+    this.includeSuit();
+    this.includeFaceValues();
+
+    this.el.appendChild(this.createTemplateNode());
+  }
+
+  blackjackCard.includeSuit = function(cardContainer, suitName) {
+    var cardContainer = this.template.querySelector('.card');    
+    cardContainer.classList.add('card-' + this.suit);
+  }
+
+  blackjackCard.includeFaceValues = function(cardContainer, suitName) {
+    var cardValues = this.template.querySelectorAll('.card-value');
+    cardValues[0].textContent =  this.face;
+    cardValues[1].textContent =  this.face;
+  }  
+
+  blackjackCard.createTemplateNode = function(template) {
+    return document.importNode(this.template, true)
+  }
+
+  document.registerElement('blackjack-card', {
+    prototype: blackjackCard
+  });
+
+})();  
+
+</script>
